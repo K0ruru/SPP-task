@@ -1,85 +1,85 @@
 :root {
-    --sidebar-bg-color: #2a2b3c;
-    --sidebar-item-hover-color: #4d5163;
-    --content-bg-color: #e5e7eb;
-    --content-text-color: #2a2b3c;
-    --dropdown-bg-color: #4d5163;
-    --dropdown-text-color: #e5e7eb;
-    --link-color: #ffab7e;
-    --link-hover-color: #fdfdfd;
-  }
-  
-  * {
+  --sidebar-bg-color: #2a2b3c;
+  --sidebar-item-hover-color: #4d5163;
+  --content-bg-color: #e5e7eb;
+  --content-text-color: #2a2b3c;
+  --dropdown-bg-color: #4d5163;
+  --dropdown-text-color: #e5e7eb;
+  --link-color: #ffab7e;
+  --link-hover-color: #fdfdfd;
+}
+
+* {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 2rem;
+}
+
+.blueTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.blueTable th,
+.blueTable td {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: left;
+}
+
+.blueTable th {
+  background-color: #2a2b3c;
+  color: #e5e7eb;
+}
+
+.blueTable tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+.add {
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #ffffff;
+  background-color: dodgerblue;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+/*
+.delete {
     text-decoration: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 2rem;
-  }
-  
-  .blueTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-  }
-  
-  .blueTable th,
-  .blueTable td {
-    border: 1px solid #e5e7eb;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .blueTable th {
-    background-color: #2a2b3c;
-    color: #e5e7eb;
-  }
-  
-  .blueTable tbody tr:hover {
-    background-color: #f0f0f0;
-  }
-  
-  a {
+    padding: 5px 10px;
+    color: #ffffff;
+    background-color: red;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.edit {
     text-decoration: none;
-    color: var(--link-color);
-  }
-  
-  /* .add {
-      text-decoration: none;
-      padding: 5px 10px;
-      color: #ffffff;
-      background-color: red;
-      border-radius: 5px;
-      margin-bottom: 2px;
-  }
-  
-  .delete {
-      text-decoration: none;
-      padding: 5px 10px;
-      color: #ffffff;
-      background-color: red;
-      border-radius: 5px;
-      margin: 2px;
-  }
-  
-  .edit {
-      text-decoration: none;
-      padding: 5px 10px;
-      color: #ffffff;
-      background-color: #65e669;
-      border-radius: 5px;
-      margin: 2px;
-  }
-  
-  .delete:hover {
-      background-color: rgb(139, 1, 1);
-  }
-  
-  .edit:hover {
-      background-color: #317134;
-  } */
-  
+    padding: 5px 10px;
+    color: #ffffff;
+    background-color: #65e669;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.delete:hover {
+    background-color: rgb(139, 1, 1);
+}
+
+.edit:hover {
+    background-color: #317134;
+} */

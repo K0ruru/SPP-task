@@ -54,7 +54,7 @@ if ($_SESSION['status'] != "login") {
     <h1>Selamat datang,
       <?php echo $_SESSION['username']; ?>!
     </h1>
-    <p>Anda telah masuk ke dashboard admin.</p>
+    <p>Anda telah masuk ke dashboard Petugas.</p>
     <p>Hati-hati dengan apa yang anda tekan jika anda salah <br> tekan dan menyebabkan masalah itu bukan urusan kami (:
     </p>
   </div>

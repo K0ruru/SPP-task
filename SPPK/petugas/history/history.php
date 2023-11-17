@@ -27,7 +27,8 @@ if ($_SESSION['status'] != "login") {
 </head>
 
 <body>
-    <a href="../../index.php"><i class="fa-solid fa-arrow-left"></i> Kembali</a><br><br>
+    <a class="add" href="../index.php"><i class="fa-solid fa-arrow-left"></i> Kembali</a><br><br>
+    <a class="add" href=""><i class="fa-solid fa-print"></i> Print PDF</a>
     <?php
     require('../../koneksi.php'); // Menghubungkan dengan file koneksi.php
     $sql = "SELECT * FROM data_pembayaran";

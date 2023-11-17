@@ -1,0 +1,72 @@
+:root {
+  --sidebar-bg-color: #2a2b3c;
+  --sidebar-item-hover-color: #4d5163;
+  --content-bg-color: #e7e7e7;
+  --content-text-color: #2a2b3c;
+  --dropdown-bg-color: #4d5163;
+  --dropdown-text-color: #e5e7eb;
+  --link-color: #ffab7e;
+  --link-hover-color: #ff6b1c;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--content-bg-color);
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--link-color);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  background: red;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+form {
+  background-color: var(--dropdown-bg-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  margin-left: 30rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 450px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="submit"] {
+  background-color: var(--link-color);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #ff6b1c;
+}

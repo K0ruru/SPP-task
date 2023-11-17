@@ -1,0 +1,80 @@
+<?php
+session_start();
+include '../../koneksi.php';
+if ($_SESSION['status'] != "login") {
+  header('location:../../login/login.php?pesan=belum_login');
+}
+$query = "SELECT * FROM siswa";
+$result = mysqli_query($conn, $query);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/sis.css" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <h2>Home</h2>
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <div class="has-dropdown">
+        <a href="#">Crud</a>
+        <div class="dropdown-menu">
+          <ul>
+            <a href="#">Siswa</a>
+            <a href="#">Kelas</a>
+            <a href="#">SPP</a>
+            <a href="#">Petugas</a>
+          </ul>
+        </div>
+      </div>
+      <a href="#">Link 4</a>
+      <br /><br /><br /><br />
+      <a href="http://">Logout</a>
+    </div>
+
+    <div class="content">
+      <a href="http:../component/add.html">Add</a>
+      <table class="blueTable">
+        <thead>
+          <tr>
+            <th>NISN</th>
+            <th>NIS</th>
+            <th>NAMA</th>
+            <th>KELAS</th>
+            <th>ALAMAT</th>
+            <th>NO TELP</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <?php
+              while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . $row['nisn'] . "</td>";
+                echo "<td>" . $row['nis'] . "</td>";
+                echo "<td>" . $row['nama'] . "</td>";
+                echo "<td>" . $row['id_kelas'] . "</td>";
+                echo "<td>" . $row['alamat'] . "</td>";
+                echo "<td>" . $row['no_telp'] . "</td>";
+                echo "<td>";
+                echo "<a href='../component/delete.php/{$row['nisn']}'>Delete</a><br />";
+                echo "<a href='../component/edit.php/{$row['nisn']}'>Edit</a>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="../js/index.js"></script>
+  </body>
+</html>

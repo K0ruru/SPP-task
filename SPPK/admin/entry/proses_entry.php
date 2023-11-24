@@ -1,49 +1,65 @@
 <?php
-session_start();
-include '../../koneksi.php';
+// Memasukkan file koneksi
+require("../../koneksi.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Memastikan bahwa form telah di-submit dengan benar
+// Mengambil data dari formulir POST
+$id_akun = $_POST["id_akun"];
+$nisn = $_POST["nisn"];
+$tgl_bayar = $_POST["tgl_bayar"];
+$bulan_dibayar = $_POST["bulan_dibayar"];
+$tahun_dibayar = $_POST["tahun_dibayar"];
+$id_spp = $_POST["id_spp"];
+$jumlah_bayar = $_POST["jumlah_bayar"];
 
-    // Melakukan sanitasi pada data yang diterima dari form
-    $id_akun = $_POST['id_akun'] ?? '';
-    $nisn = $_POST['nisn'] ?? '';
-    $tgl_bayar = $_POST['tgl_bayar'] ?? '';
-    $bulan_dibayar = $_POST['bulan_dibayar'] ?? '';
-    $tahun_dibayar = $_POST['tahun_dibayar'] ?? '';
-    $id_spp = $_POST['id_spp'] ?? '';
-    $jumlah_bayar = $_POST['jumlah_bayar'] ?? '';
-    $id_akun_siswa = $_POST['id_akun_siswa'] ?? '';
+mysqli_query($conn, "SET FOREIGN_KEY_CHECKS=0;");
 
-    // Lakukan validasi data di sini sesuai kebutuhan Anda (contoh: cek keberadaan data di database, format tanggal, jumlah bayar, dll)
+// Mengambil data siswa berdasarkan NISN
+$query = mysqli_query($conn, "SELECT * FROM `data_siswa` WHERE nisn = $nisn");
+$row = mysqli_fetch_array($query);
+$id_akun_siswa = $row["id_akun"];
 
-    // Menonaktifkan pengecekan kunci asing sementara
-    mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 0");
+// Mengambil data dari tabel `data_spp` dan `data_pembayaran`
+$query = mysqli_query($conn, "SELECT * FROM `data_spp`");
+$query2 = mysqli_query($conn, "SELECT * FROM `data_pembayaran`");
 
-    // Jika data valid, lakukan proses penyimpanan ke database
-    $sql = "INSERT INTO data_pembayaran (id_akun, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, id_akun_siswa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$row = mysqli_fetch_array($query2);
+$row = mysqli_fetch_array($query);
+$account_id = $row['id_spp'];
+$nominal_spp = $row['nominal'];
+$tahun_spp = $row['tahun'];
 
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "iissiiii", $id_akun, $nisn, $tgl_bayar, $bulan_dibayar, $tahun_dibayar, $id_spp, $jumlah_bayar, $id_akun_siswa);
+// Array nama bulan
+$months = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+];
 
-    if (mysqli_stmt_execute($stmt)) {
-        // Jika berhasil disimpan, redirect ke halaman sukses atau ke halaman lain sesuai kebutuhan
-        header("location: ../history/history.php");
-        exit();
-    } else {
-        // Jika gagal disimpan, berikan pesan kesalahan atau tindakan yang sesuai
-        echo "Terjadi kesalahan dalam memproses pembayaran. Silakan coba lagi.";
+// Mencari indeks bulan yang dipilih
+$key = array_search($bulan_dibayar, $months);
+
+// Mengecek apakah pembayaran untuk NISN, tahun, dan bulan tertentu sudah dilakukan sebelumnya
+$checkQuery = mysqli_query($conn, "SELECT * FROM data_pembayaran WHERE nisn = '$nisn' AND tahun_dibayar = '$tahun_dibayar' AND bulan_dibayar = '$bulan_dibayar'");
+
+if ($jumlah_bayar >= $nominal_spp) {
+    $count = floor($jumlah_bayar / $nominal_spp);
+    for ($i = 0; $i < $count; $i++) {
+        if ($key !== false && isset($months[$key])) {
+            $Nextbulan_dibayar = $months[$key];
+            $jumlah_bayar = $jumlah_bayar - $nominal_spp;
+            mysqli_query($conn, "INSERT INTO `data_pembayaran` VALUE(NULL,$id_akun,'$nisn','$tgl_bayar','$Nextbulan_dibayar','$tahun_dibayar',$id_spp,$nominal_spp,$id_akun_siswa) ");
+            $key++;
+        } else {
+            $Nextbulan_dibayar = 'Januari';
+            $tahun_dibayar++;
+            mysqli_query($conn, "INSERT INTO `data_pembayaran` VALUE(NULL,$id_akun,'$nisn','$tgl_bayar','$Nextbulan_dibayar','$tahun_dibayar',$id_spp,$nominal_spp,$id_akun_siswa) ");
+        }
     }
-
-    mysqli_stmt_close($stmt);
-
-    // Mengaktifkan kembali pengecekan kunci asing setelah operasi selesai
-    mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 1");
-
-    mysqli_close($conn);
+    mysqli_query($conn, "SET FOREIGN_KEY_CHECKS=1;");
+    header("Location: ../history/history.php");
 } else {
-    // Jika ada upaya akses langsung ke file ini tanpa melalui form, redirect ke halaman lain atau tindakan yang sesuai
-    header("location: halaman_error.php");
-    exit();
+    mysqli_query($conn, "SET FOREIGN_KEY_CHECKS=1;");
+    mysqli_query($conn, "INSERT INTO `data_pembayaran` VALUE(NULL,$id_akun,'$nisn','$tgl_bayar','$bulan_dibayar','$tahun_dibayar',$id_spp,$jumlah_bayar,$id_akun_siswa) ");
+    header("Location: ../history/history.php");
 }
+
 ?>

@@ -19,7 +19,7 @@ if (isset($_GET['create_pdf'])) {
     $pdf->AddPage();
 
     $content = '<h1>Data Pembayaran</h1>';
-    $content = '<table border="1">
+    $content .= '<table border="1">
                     <tr>
                         <th>id_pembayaran</th>
                         <th>id_akun</th>
@@ -80,7 +80,7 @@ if (isset($_GET['create_pdf'])) {
 
 <body>
     <a class="add" href="../index.php"><i class="fa-solid fa-arrow-left"></i> Kembali</a><br><br>
-    <a class="add" id="create_pdf" href=""><i class="fa-solid fa-print"></i> Print PDF</a>
+    <a class="add" href=""><i class="fa-solid fa-print"></i> PDF</a>
     <?php
     require('../../koneksi.php'); // Menghubungkan dengan file koneksi.php
     $sql = "SELECT * FROM data_pembayaran";
